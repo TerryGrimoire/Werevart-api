@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Profile = require("../models/profileModel");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
@@ -67,10 +68,11 @@ const createUser = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    
+
     //add a User to db
 
     const user = await User.create( { email, password : hash, type })
+    const profile = await Profile.create( { email, type })
 
     //create a token
 
