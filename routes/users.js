@@ -17,7 +17,7 @@ router.get('/', getUsers);
 // GET one User
     router.get('/:id', getOneUser);
 
-// POST a new User
+// POST/CREATE a new User
 router.post('/', createUser);   
 
 // DELETE a User
