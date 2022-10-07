@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
 
 // get all Users
 
@@ -27,14 +28,23 @@ const getUsers = async (req, res) => {
     res.status(200).json(users)
 }
 
-// create a new User
+// create a new User - signup User
 
 const createUser = async (req, res) => {
     const {email, password, type} = req.body;
     //add a User to db
     try {
-        const user = await User.create({email, password, type})
-        res.status(200).json(user)
+        const exists = await User.findOne({ email })
+
+    if(exists) {
+        throw Error("Email already exists")
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    const user = await User.create( { email, password : hash, type })
+        res.status(200).json({email, user})
     } catch (error) {
             res.status(400).json({error: error.message})
         }
