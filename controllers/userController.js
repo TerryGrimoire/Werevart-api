@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
+const validator = require("validator");
 
 // get all Users
 
@@ -32,9 +33,25 @@ const getUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
     const {email, password, type} = req.body;
+
+
     //add a User to db
     try {
-        const exists = await User.findOne({ email })
+         // validation 
+
+    if(!email || !password || !type) {
+        throw Error("All fields must be valid")
+    }
+
+    if(!validator.isEmail(email)) {
+        throw Error("Please enter a valid email address")
+    }
+
+    if(!validator.isStrongPassword(password)) {
+        throw Error("Please enter a stronger password")
+    }
+    
+    const exists = await User.findOne({ email })
 
     if(exists) {
         throw Error("Email already exists")
@@ -45,8 +62,8 @@ const createUser = async (req, res) => {
 
     const user = await User.create( { email, password : hash, type })
         res.status(200).json({email, user})
-    } catch (error) {
-            res.status(400).json({error: error.message})
+    } catch (Error) {
+            res.status(400).json({error: Error.message})
         }
 }
 // delete a User
