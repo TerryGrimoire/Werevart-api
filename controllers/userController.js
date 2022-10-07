@@ -2,6 +2,13 @@ const User = require("../models/userModel");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
+
+// create a new token 
+
+const createToken = (_id) => {
+    return jwt.sign({_id}, process.env.SECRET, { expiresIn: "3d" } )
+}
 
 // get all Users
 
@@ -34,10 +41,8 @@ const getUsers = async (req, res) => {
 const createUser = async (req, res) => {
     const {email, password, type} = req.body;
 
-
-    //add a User to db
     try {
-         // validation 
+         // validation  of email and password 
 
     if(!email || !password || !type) {
         throw Error("All fields must be valid")
@@ -50,18 +55,28 @@ const createUser = async (req, res) => {
     if(!validator.isStrongPassword(password)) {
         throw Error("Please enter a stronger password")
     }
-    
+    // check if email already exists in database
     const exists = await User.findOne({ email })
 
     if(exists) {
         throw Error("Email already exists")
     }
 
+    // creating hash password
+
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
+    
+    //add a User to db
 
     const user = await User.create( { email, password : hash, type })
-        res.status(200).json({email, user})
+
+    //create a token
+
+    const token = createToken(user._id);
+
+
+        res.status(200).json({email, token})
     } catch (Error) {
             res.status(400).json({error: Error.message})
         }
