@@ -149,7 +149,7 @@ const login = async (req, res) => {
 
         const token = createToken(user._id);
 
-        res.status(200).json({email, token})
+        res.status(200).json({email, token, type: user.type })
 
     }
     catch (error) {

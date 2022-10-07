@@ -18,7 +18,7 @@ router.get('/', getUsers);
 // GET one User
     router.get('/:id', getOneUser);
 
-// POST/CREATE a new User
+// POST/CREATE a new User (register)
 router.post('/', createUser);   
 
 // DELETE a User
@@ -29,7 +29,7 @@ router.delete('/:id', deleteUser);
 
 router.patch('/:id', updateUser);
 
-// login 
+// login
 
 router.post('/login', login);
 
