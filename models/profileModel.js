@@ -37,6 +37,10 @@ const profileSchema = new Schema({
     skills: {
         type: Array,
     },
+    email: {
+        type: String,
+        required: true
+    },
     type: {
         type: String,
         required: true
