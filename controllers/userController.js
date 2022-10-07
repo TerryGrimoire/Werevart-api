@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
+const { response } = require("express");
 
 // create a new token 
 
@@ -123,7 +124,38 @@ const updateUser = async (req, res) => {
 
 }
 
-// signup route 
+// login a user
+
+const login = async (req, res) => {
+    const {email, password} = req.body
+    try {
+        if(!email || !password ) {
+            throw Error("All fields must be valid")
+        }
+    
+        const user = await User.findOne({email})
+    
+        if(!user) {
+            throw Error("User not found")
+        }
+    
+        const match = await bcrypt.compare(password, user.password)
+    
+        if(!match) {
+            throw Error("Invalid login credentials")
+        }
+
+        // create token 
+
+        const token = createToken(user._id);
+
+        res.status(200).json({email, token})
+
+    }
+    catch (error) {
+        res.status(400).json({ error:error.message })
+    }
+};
 
 
 
@@ -132,5 +164,6 @@ module.exports = {
     getUsers,
     deleteUser,
     updateUser,
-    getOneUser 
+    getOneUser, 
+    login
 }
