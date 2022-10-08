@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require('cors');
+const cors = require("cors");
 require("dotenv").config();
 
 const projectsRoutes = require("./routes/projects");
@@ -14,14 +14,7 @@ const app = express();
 
 
 // Add Access Control Allow Origin headers
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-  });
+app.use(cors())
 
 //middleware
 app.use(express.json());
