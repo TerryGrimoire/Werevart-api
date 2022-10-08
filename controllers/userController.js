@@ -79,7 +79,7 @@ const createUser = async (req, res) => {
     const token = createToken(user._id);
 
 
-        res.status(200).json({email, type, token})
+        res.status(200).json({email, type, token, id : profile._id})
     } catch (Error) {
             res.status(400).json({error: Error.message})
         }
