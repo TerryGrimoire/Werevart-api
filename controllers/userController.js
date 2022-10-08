@@ -151,7 +151,11 @@ const login = async (req, res) => {
 
         const token = createToken(user._id);
 
-        res.status(200).json({email, token, type: user.type })
+        // find profile
+
+        const profile = await Profile.findOne({email})
+
+        res.status(200).json({email, token, type: user.type, id: profile.id })
 
     }
     catch (error) {
