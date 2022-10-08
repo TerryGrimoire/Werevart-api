@@ -14,8 +14,13 @@ const app = express();
 
 
 // Add Access Control Allow Origin headers
-app.use(cors())
-
+app.use(
+  cors({
+    origin: " *",
+    optionsSuccessStatus: 200,
+  })
+);
+             
 //middleware
 app.use(express.json());
 app.use((req, res, next) => {
