@@ -12,14 +12,16 @@ const picturesRoutes = require("./routes/pictures");
 
 const app = express();
 
-// cors 
 
-const corsOptions ={
-    origin: process.env.CORS,
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+// Add Access Control Allow Origin headers
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
 
 //middleware
 app.use(express.json());
