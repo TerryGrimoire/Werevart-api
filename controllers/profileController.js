@@ -30,10 +30,10 @@ const getProfiles = async (req, res) => {
 // create a new Profile
 
 const createProfile = async (req, res) => {
-    const {firstName, lastName, adress, postcode, city, country, username, src, alt, description, skills, type} = req.body;
+    const {firstname, lastname, address, postcode, city, country, username, src, alt, description, skills, softwares, type} = req.body;
     //add a Profile to db
     try {
-        const profile = await Profile.create({firstName, lastName, adress, postcode, city, country, username, src, alt, description, skills, type})
+        const profile = await Profile.create({firstname, lastname, address, postcode, city, country, username, src, alt, description, skills, softwares, type})
         res.status(200).json(profile)
     } catch (error) {
             res.status(400).json({error: error.message})

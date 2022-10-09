@@ -4,13 +4,13 @@ const Schema = mongoose.Schema;
 // schema of the database
 
 const profileSchema = new Schema({
-    firstName: {
+    firstname: {
         type: String,
     },
-    lastName: {
+    lastname: {
         type: String,
     },
-    adress: {
+    address: {
         type: String,
     },
     postcode: {
@@ -35,6 +35,9 @@ const profileSchema = new Schema({
         type: String,
     },
     skills: {
+        type: Array,
+    },
+    softwares: {
         type: Array,
     },
     email: {
