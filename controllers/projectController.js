@@ -30,10 +30,10 @@ const getProjects = async (req, res) => {
 // create a new project
 
 const createProject = async (req, res) => {
-    const {contract, timeframe, published, src, alt, title, description, artistePseudo, techniques} = req.body;
+    const {contract, timeframe, src, alt, title, description, artiste, techniques} = req.body;
     //add a project to db
     try {
-        const project = await Project.create({contract, timeframe, published, src, alt, title, description, artistePseudo, techniques})
+        const project = await Project.create({contract, timeframe, src, alt, title, description, artiste, techniques})
         res.status(200).json(project)
     } catch (error) {
             res.status(400).json({error: error.message})
