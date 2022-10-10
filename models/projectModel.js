@@ -12,17 +12,11 @@ const projectSchema = new Schema({
         type: String,
         required: true
     },
-    published: {
-        type: String,
-        required: true
-    },
     src: {
         type: String,
-        required: true
     },
     alt: {
         type: String,
-        required: true
     },
     title: {
         type: String,
@@ -32,8 +26,8 @@ const projectSchema = new Schema({
         type: String,
         required: true
     },
-    artistePseudo: {
-        type: String,
+    artiste: {
+        type: Object,
         required: true
     },
     techniques: {
